@@ -1,0 +1,26 @@
+<Project>
+
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <OutputFolder>out</OutputFolder>
+        <AssemblyName>main</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include=".\program.cs" />
+
+        <Reference Include="\usr\lib\mono\4.7.2-api\Facades\netstandard.dll" />
+        <Reference Include=".\packages\Avalonia*\lib\netstandard2.0\*.dll" />
+
+        <LIBs Include=".\packages\*\lib\netstandard2.0\*.dll" />
+        <LIBs Include=".\packages\*\runtimes\linux-x64\native\*.so" />
+        <LIBs Include=".\packages\*\lib\net4*\*.dll" />
+    </ItemGroup>
+
+    <Target Name="Build"> 
+        <MakeDir Directories="$(OutputFolder)" />
+        <Copy SourceFiles="@(LIBs)" DestinationFolder="$(OutputFolder)" />
+        <Csc Sources="@(Compile)" References="@(Reference)" OutputAssembly="$(OutputFolder)\$(AssemblyName).exe" /> 
+    </Target>
+
+</Project>
